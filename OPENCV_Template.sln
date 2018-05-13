@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27428.2037
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "OPENCV_Template", "OPENCV_Template\OPENCV_Template.vcxproj", "{37383C1A-954B-45A6-96BA-8767B0C62A1E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{37383C1A-954B-45A6-96BA-8767B0C62A1E}.Debug|x64.ActiveCfg = Debug|x64
+		{37383C1A-954B-45A6-96BA-8767B0C62A1E}.Debug|x64.Build.0 = Debug|x64
+		{37383C1A-954B-45A6-96BA-8767B0C62A1E}.Debug|x86.ActiveCfg = Debug|Win32
+		{37383C1A-954B-45A6-96BA-8767B0C62A1E}.Debug|x86.Build.0 = Debug|Win32
+		{37383C1A-954B-45A6-96BA-8767B0C62A1E}.Release|x64.ActiveCfg = Release|x64
+		{37383C1A-954B-45A6-96BA-8767B0C62A1E}.Release|x64.Build.0 = Release|x64
+		{37383C1A-954B-45A6-96BA-8767B0C62A1E}.Release|x86.ActiveCfg = Release|Win32
+		{37383C1A-954B-45A6-96BA-8767B0C62A1E}.Release|x86.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {44517F4D-B6EF-40B7-98E7-31316E13E8A5}
+	EndGlobalSection
+EndGlobal
