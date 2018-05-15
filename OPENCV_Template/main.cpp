@@ -22,7 +22,7 @@
 using namespace std;
 using namespace cv;
 
-const float calibrationSquareDimension = 0.0245f;  // Need to test this
+const float calibrationSquareDimension = 0.02553f;  // Need to test this
 const float arucoSquareDimension = 0.076f; // need to test this
 const Size  chessboardDimensions = Size(6, 9);
 
