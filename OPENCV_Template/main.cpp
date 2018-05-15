@@ -147,8 +147,10 @@ int startWebcamMonitoring(const Mat& cameraMatrix, const Mat& distanceCoefficien
 	vector<Vec3d> rotationVectors, translationVectors;
 
 	while (true) {
-		if (!vid.read(frame))
+		if (!vid.read(frame)) {
+			cout << "failed to initiate camera" << endl;
 			break;
+		}
 
 		aruco::detectMarkers(frame, markerDictionary, markerCorners, markerIds);
 		aruco::estimatePoseSingleMarkers(markerCorners, arucoSquareDimension, cameraMatrix, distanceCoefficient, rotationVectors, translationVectors);
