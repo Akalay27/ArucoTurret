@@ -139,6 +139,7 @@ int startWebcamMonitoring(const Mat& cameraMatrix, const Mat& distanceCoefficien
 	VideoCapture vid(0);
 
 	if (!vid.isOpened()) {
+		cout << "failed to initiate camera" << endl;
 		return -1;
 	}
 
