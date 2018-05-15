@@ -30,7 +30,7 @@ const int cupMarkerId = 5;
 const float gravitationalConstant = 9.80665f;
 const float speed = 5;  // need to determine
 
-//const Vec3d cameraOffset = { 0,0,0 };
+const Vec3d cameraOffset = { 0,0,0 };
 
 void createArucoMarkers() {
 
