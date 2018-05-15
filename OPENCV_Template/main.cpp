@@ -1,10 +1,19 @@
-#include "opencv2\core.hpp"
-#include "opencv2\imgcodecs.hpp"
-#include "opencv2\imgproc.hpp"
-#include "opencv2\highgui.hpp"
-#include "opencv2\aruco.hpp"
-#include "opencv2\calib3d.hpp"
 
+#if defined(_WIN64)
+	#include "opencv2\core.hpp"
+	#include "opencv2\imgcodecs.hpp"
+	#include "opencv2\imgproc.hpp"
+	#include "opencv2\highgui.hpp"
+	#include "opencv2\aruco.hpp"
+	#include "opencv2\calib3d.hpp"
+#elif defined(__linux__) || defined(__unix__)
+	#include "opencv2/core.hpp"
+	#include "opencv2/imgcodecs.hpp"
+	#include "opencv2/imgproc.hpp"
+	#include "opencv2/highgui.hpp"
+	#include "opencv2/aruco.hpp"
+	#include "opencv2/calib3d.hpp"
+#endif
 
 #include <sstream>
 #include <iostream>
@@ -33,7 +42,7 @@ void createArucoMarkers() {
 		aruco::drawMarker(markerDictionary, i, 500, outputMarker, 1);
 		ostringstream convert;
 		string imageName = "4x4Marker_";
-		convert << imageName << i << ".jpg";
+		convert << "markers/" << imageName << i << ".jpg";
 		imwrite(convert.str(), outputMarker);
 	}
 
@@ -336,11 +345,22 @@ int main(int argv, char** argc)
 
 	Vec3d cupPos;
 
-
-	//cameraCalibrationProcess(cameraMatrix, distanceCoefficients);
-	loadCameraCalibration("Okaythen", cameraMatrix, distanceCoefficients);
-	startWebcamMonitoring(cameraMatrix, distanceCoefficients, arucoSquareDimension, cupPos);
-
+	string input;
+	cin >> input;
+	
+	if (input == "c") {
+		cameraCalibrationProcess(cameraMatrix, distanceCoefficients);
+	}
+	if (input == "p") {
+		createArucoMarkers();
+	}
+	else {
+		loadCameraCalibration("Okaythen", cameraMatrix, distanceCoefficients);
+		startWebcamMonitoring(cameraMatrix, distanceCoefficients, arucoSquareDimension, cupPos);
+	}  
+	
+	
+	
 	
 
 	return 0;
