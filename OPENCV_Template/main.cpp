@@ -46,6 +46,7 @@ void createArucoMarkers() {
 		imwrite(convert.str(), outputMarker);
 	}
 
+
 }
 
 void createKnownBoardPosition(Size boardSize, float squareEdgeLength, vector<Point3f>& corners) {
@@ -307,7 +308,7 @@ void cameraCalibrationProcess(Mat& cameraMatrix, Mat& distanceCoefficients) {
 
 		switch (character)
 		{
-		case ' ':
+		case 32:
 			//saving image
 			if (found)
 			{
