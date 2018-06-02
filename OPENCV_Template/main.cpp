@@ -120,7 +120,8 @@ double determineTrajectoryAngle(Vec3d MarkerPos, float Grav, float Speed) // cal
 	double angle1 = atan((pow(Speed, 2) + sqrt(pow(Speed, 4) - Grav * (Grav*pow(x, 2) + 2 * pow(Speed, 2)*y))) / Grav * x); // From https://blog.forrestthewoods.com/solving-ballistic-trajectories-b0165523348c
 
 	double angle2 = atan((pow(Speed, 2) - sqrt(pow(Speed, 4) - Grav * (Grav*pow(x, 2) + 2 * pow(Speed, 2)*y))) / Grav * x);
-	angle1 *= 180 / 3.14159265359;
+	angle1 =angle1/ 3.14159265359 *180;
+	angle2 = angle2 / 3.14159265359 * 180;
 
 	if (!isnan(angle1)) {
 		return angle1;
@@ -142,7 +143,7 @@ int startWebcamMonitoring(const Mat& cameraMatrix, const Mat& distanceCoefficien
 	Mat frame;
 	int fn;
 	#if defined(__linux__) || defined(__unix__)
-		fn = serialOpen("/dev/ttyUSB0", 9600);
+		fn = serialOpen("/dev/ttyACM0", 9600);
 	#endif
 	vector<int> markerIds;
 	vector<vector<Point2f>> markerCorners, rejectedCanidates;
