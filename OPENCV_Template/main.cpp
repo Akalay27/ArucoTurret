@@ -1,4 +1,8 @@
 
+#include <stdio.h>
+#include <string.h>
+#include <errno.h>
+
 #if defined(_WIN64)
 	#include "opencv2\core.hpp"
 	#include "opencv2\imgcodecs.hpp"
@@ -6,6 +10,7 @@
 	#include "opencv2\highgui.hpp"
 	#include "opencv2\aruco.hpp"
 	#include "opencv2\calib3d.hpp"
+	bool pi = 0;
 #elif defined(__linux__) || defined(__unix__)
 	#include "opencv2/core.hpp"
 	#include "opencv2/imgcodecs.hpp"
@@ -13,7 +18,11 @@
 	#include "opencv2/highgui.hpp"
 	#include "opencv2/aruco.hpp"
 	#include "opencv2/calib3d.hpp"
+	#include <wiringPi.h>
+	#include <wiringSerial.h>
+	bool pi = 1;
 #endif
+
 
 #include <sstream>
 #include <iostream>
@@ -110,7 +119,8 @@ double determineTrajectoryAngle(Vec3d MarkerPos, float Grav, float Speed) // cal
 	double y = MarkerPos[1];
 	double angle1 = atan((pow(Speed, 2) + sqrt(pow(Speed, 4) - Grav * (Grav*pow(x, 2) + 2 * pow(Speed, 2)*y))) / Grav * x); // From https://blog.forrestthewoods.com/solving-ballistic-trajectories-b0165523348c
 
-	double angle2 = atan((pow(Speed, 2) - sqrt(pow(Speed, 4) - Grav * (Grav*pow(x, 2) + 2 * pow(Speed, 2)*y))) / Grav * x); // From https://blog.forrestthewoods.com/solving-ballistic-trajectories-b0165523348c
+	double angle2 = atan((pow(Speed, 2) - sqrt(pow(Speed, 4) - Grav * (Grav*pow(x, 2) + 2 * pow(Speed, 2)*y))) / Grav * x);
+	angle1 *= 180 / 3.14159265359;
 
 	if (!isnan(angle1)) {
 		return angle1;
@@ -130,7 +140,10 @@ double determineTrajectoryAngle(Vec3d MarkerPos, float Grav, float Speed) // cal
 int startWebcamMonitoring(const Mat& cameraMatrix, const Mat& distanceCoefficient, float arucoSquareDimensions, Vec3d& cupPos)
 {
 	Mat frame;
-
+	int fn;
+	#if defined(__linux__) || defined(__unix__)
+		fn = serialOpen("/dev/ttyUSB0", 9600);
+	#endif
 	vector<int> markerIds;
 	vector<vector<Point2f>> markerCorners, rejectedCanidates;
 	aruco::DetectorParameters parameters;
@@ -170,8 +183,17 @@ int startWebcamMonitoring(const Mat& cameraMatrix, const Mat& distanceCoefficien
 		cupPos += cameraOffset;
 		cout << "Cup is at " << cupPos << " relative to the camera." << endl;
 		cout << "Rotation of motors: " << determineZRot(cupPos) << " in y and " << determineTrajectoryAngle(cupPos,gravitationalConstant,speed) << " in x." << endl;
+
 		imshow("Webcam", frame);
+		#if defined(__linux__) || defined(__unix__)
+			serialPrintf(fd, ( "%f/%f", determineTrajectoryAngle(cupPos, gravitationalConstant, speed), determineZRot(cupPos));
+
+		#endif
 		if (waitKey(30) >= 0) {
+			#if defined(__linux__) || defined(__unix__)
+				serialClose(fd);
+
+			#endif
 			break;
 		}
 
