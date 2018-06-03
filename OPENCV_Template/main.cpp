@@ -188,7 +188,7 @@ int startWebcamMonitoring(const Mat& cameraMatrix, const Mat& distanceCoefficien
 
 		imshow("Webcam", frame);
 		#if defined(__linux__) || defined(__unix__)
-			serialPrintf(fn, ( "%f/%f", determineTrajectoryAngle(cupPos, gravitationalConstant, speed), determineZRot(cupPos)));
+			serialPuts(fn, ( printf("%f/%f", determineTrajectoryAngle(cupPos, gravitationalConstant, speed), determineZRot(cupPos)));
 
 		#endif
 		if (waitKey(30) >= 0) {
