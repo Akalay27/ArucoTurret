@@ -144,6 +144,7 @@ int startWebcamMonitoring(const Mat& cameraMatrix, const Mat& distanceCoefficien
 	int fn;
 	#if defined(__linux__) || defined(__unix__)
 		fn = serialOpen("/dev/ttyACM0", 9600);
+
 	#endif
 	vector<int> markerIds;
 	vector<vector<Point2f>> markerCorners, rejectedCanidates;
@@ -187,12 +188,12 @@ int startWebcamMonitoring(const Mat& cameraMatrix, const Mat& distanceCoefficien
 
 		imshow("Webcam", frame);
 		#if defined(__linux__) || defined(__unix__)
-			serialPrintf(fd, ( "%f/%f", determineTrajectoryAngle(cupPos, gravitationalConstant, speed), determineZRot(cupPos));
+			serialPrintf(fn, ( "%f/%f", determineTrajectoryAngle(cupPos, gravitationalConstant, speed), determineZRot(cupPos)));
 
 		#endif
 		if (waitKey(30) >= 0) {
 			#if defined(__linux__) || defined(__unix__)
-				serialClose(fd);
+				serialClose(fn);
 
 			#endif
 			break;
