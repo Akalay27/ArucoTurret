@@ -141,9 +141,9 @@ double determineTrajectoryAngle(Vec3d MarkerPos, float Grav, float Speed) // cal
 int startWebcamMonitoring(const Mat& cameraMatrix, const Mat& distanceCoefficient, float arucoSquareDimensions, Vec3d& cupPos)
 {
 	Mat frame;
-	int fn;
+	int fd;
 	#if defined(__linux__) || defined(__unix__)
-		fn = serialOpen("/dev/ttyACM0", 9600);
+		fd = serialOpen("/dev/ttyACM0", 9600);
 
 	#endif
 	vector<int> markerIds;
@@ -188,12 +188,12 @@ int startWebcamMonitoring(const Mat& cameraMatrix, const Mat& distanceCoefficien
 
 		imshow("Webcam", frame);
 		#if defined(__linux__) || defined(__unix__)
-			serialPuts(fn, ( printf("%f/%f", determineTrajectoryAngle(cupPos, gravitationalConstant, speed), determineZRot(cupPos)));
+			serialPrintf(fd, "%f/%f", determineTrajectoryAngle(cupPos, gravitationalConstant, speed), determineZRot(cupPos));
 
 		#endif
 		if (waitKey(30) >= 0) {
 			#if defined(__linux__) || defined(__unix__)
-				serialClose(fn);
+				serialClose(fd);
 
 			#endif
 			break;
