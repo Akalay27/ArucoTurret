@@ -142,8 +142,10 @@ int startWebcamMonitoring(const Mat& cameraMatrix, const Mat& distanceCoefficien
 {
 	Mat frame;
 	int fd;
+	string serialPort;
+	cin >> serialPort;
 	#if defined(__linux__) || defined(__unix__)
-		fd = serialOpen("/dev/ttyACM0", 9600);
+		fd = serialOpen("/dev/" + serialPort, 9600);
 
 	#endif
 	vector<int> markerIds;
