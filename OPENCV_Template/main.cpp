@@ -186,13 +186,13 @@ int startWebcamMonitoring(const Mat& cameraMatrix, const Mat& distanceCoefficien
 		}
 		aruco::drawDetectedMarkers(frame, markerCorners,markerIds, 0.1f);
 		cupPos += cameraOffset;
-		cout << "Cup is at " << cupPos << " relative to the camera." << endl;
-		cout << "Rotation of motors: " << determineZRot(cupPos) << " in y and " << determineTrajectoryAngle(cupPos,gravitationalConstant,speed) << " in x." << endl;
+		//cout << "Cup is at " << cupPos << " relative to the camera." << endl;
+		//cout << "Rotation of motors: " << determineZRot(cupPos) << " in y and " << determineTrajectoryAngle(cupPos,gravitationalConstant,speed) << " in x." << endl;
 
 		imshow("Webcam", frame);
 		#if defined(__linux__) || defined(__unix__)
 			serialPrintf(fd, "%f/%f\n", determineTrajectoryAngle(cupPos, gravitationalConstant, speed), determineZRot(cupPos));
-
+			cout << printf("%f/%f\n", determineTrajectoryAngle(cupPos, gravitationalConstant, speed), determineZRot(cupPos)) << endl;
 		#endif
 		if (waitKey(30) >= 0) {
 			#if defined(__linux__) || defined(__unix__)
