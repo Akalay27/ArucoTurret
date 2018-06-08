@@ -23,7 +23,6 @@
 	bool pi = 1;
 #endif
 
-
 #include <sstream>
 #include <iostream>
 #include <fstream>
