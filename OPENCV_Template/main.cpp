@@ -366,7 +366,18 @@ void cameraCalibrationProcess(Mat& cameraMatrix, Mat& distanceCoefficients) {
 
 }
 
+void testSerial() {
 
+	string port;
+	cin >> port;
+	
+	int fd = serialOpen(port.c_str(), 9600);
+	while (true) {
+		string message;
+		cin >> message;
+		serialPuts(fd, message);
+	}
+}
 
 int main(int argv, char** argc)
 {
@@ -385,10 +396,14 @@ int main(int argv, char** argc)
 	if (input == "p") {
 		createArucoMarkers();
 	}
+	if (input == "test") {
+		testSerial();
+	}
 	else {
 		loadCameraCalibration("Okaythen", cameraMatrix, distanceCoefficients);
 		startWebcamMonitoring(cameraMatrix, distanceCoefficients, arucoSquareDimension, cupPos);
 	}  
+	
 	
 	
 	
