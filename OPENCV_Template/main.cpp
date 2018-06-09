@@ -193,7 +193,7 @@ int startWebcamMonitoring(const Mat& cameraMatrix, const Mat& distanceCoefficien
 		#if defined(__linux__) || defined(__unix__)
 			//serialPrintf(fd, "%f/%f\n", determineTrajectoryAngle(cupPos, gravitationalConstant, speed), determineZRot(cupPos));
 			serialPuts(fd, message.c_str());
-			usleep(50);
+			delayMicroseconds(50);
 			cout << printf("%f/%f\n", determineTrajectoryAngle(cupPos, gravitationalConstant, speed), determineZRot(cupPos)) << endl;
 		#endif
 		if (waitKey(30) >= 0) {
@@ -403,6 +403,7 @@ int main(int argv, char** argc)
 		testSerial();
 	}
 	else {
+		wiringPiSetup();
 		loadCameraCalibration("Okaythen", cameraMatrix, distanceCoefficients);
 		startWebcamMonitoring(cameraMatrix, distanceCoefficients, arucoSquareDimension, cupPos);
 	}  
