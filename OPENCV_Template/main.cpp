@@ -149,7 +149,7 @@ int startWebcamMonitoring(const Mat& cameraMatrix, const Mat& distanceCoefficien
 		fd = serialOpen(serialPort.c_str(), 57600);
 
 	#endif
-		sleepMicroseconds(5000000);
+		delay(5000);
 	vector<int> markerIds;
 	vector<vector<Point2f>> markerCorners, rejectedCanidates;
 	aruco::DetectorParameters parameters;
