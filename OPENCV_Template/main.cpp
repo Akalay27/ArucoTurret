@@ -375,7 +375,7 @@ void testSerial() {
 	while (true) {
 		string message;
 		cin >> message;
-		serialPuts(fd, message);
+		serialPuts(fd, message.c_str());
 	}
 }
 
