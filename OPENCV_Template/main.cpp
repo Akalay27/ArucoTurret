@@ -145,7 +145,7 @@ int startWebcamMonitoring(const Mat& cameraMatrix, const Mat& distanceCoefficien
 	cin >> serialPort;
 	
 	#if defined(__linux__) || defined(__unix__)
-		fd = serialOpen(serialPort.c_str(), 9600);
+		fd = serialOpen(serialPort.c_str(), 57600);
 
 	#endif
 	vector<int> markerIds;
@@ -372,7 +372,7 @@ void testSerial() {
 	string port;
 	cin >> port;
 	
-	int fd = serialOpen(port.c_str(), 9600);
+	int fd = serialOpen(port.c_str(), 57600);
 	while (true) {
 		string message;
 		cin >> message;
