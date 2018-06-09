@@ -144,10 +144,12 @@ int startWebcamMonitoring(const Mat& cameraMatrix, const Mat& distanceCoefficien
 	string serialPort;
 	cin >> serialPort;
 	
+	cout << "initializing Arduino..." << endl;
 	#if defined(__linux__) || defined(__unix__)
 		fd = serialOpen(serialPort.c_str(), 57600);
 
 	#endif
+		sleepMicroseconds(5000000);
 	vector<int> markerIds;
 	vector<vector<Point2f>> markerCorners, rejectedCanidates;
 	aruco::DetectorParameters parameters;
@@ -376,7 +378,7 @@ void testSerial() {
 	int fd = serialOpen(port.c_str(), 57600);
 	while (true) {
 		string message;
-		cin.ignore('\n');
+		
 		cin >> message;
 		
 		serialPuts(fd, message.c_str());
