@@ -376,8 +376,9 @@ void testSerial() {
 	int fd = serialOpen(port.c_str(), 57600);
 	while (true) {
 		string message;
+		cin.ignore('\n');
 		cin >> message;
-		message = "90/90e";
+		
 		serialPuts(fd, message.c_str());
 	}
 }
