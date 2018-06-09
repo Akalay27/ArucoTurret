@@ -188,12 +188,12 @@ int startWebcamMonitoring(const Mat& cameraMatrix, const Mat& distanceCoefficien
 		//cout << "Cup is at " << cupPos << " relative to the camera." << endl;
 		//cout << "Rotation of motors: " << determineZRot(cupPos) << " in y and " << determineTrajectoryAngle(cupPos,gravitationalConstant,speed) << " in x." << endl;
 		string message;
-		message = "90e";
+		message = "90/90e";
 		imshow("Webcam", frame);
 		#if defined(__linux__) || defined(__unix__)
 			//serialPrintf(fd, "%f/%f\n", determineTrajectoryAngle(cupPos, gravitationalConstant, speed), determineZRot(cupPos));
 			serialPuts(fd, message.c_str());
-			delayMicroseconds(8000);
+			
 			cout << printf("%f/%f\n", determineTrajectoryAngle(cupPos, gravitationalConstant, speed), determineZRot(cupPos)) << endl;
 		#endif
 		if (waitKey(30) >= 0) {
@@ -377,7 +377,7 @@ void testSerial() {
 	while (true) {
 		string message;
 		cin >> message;
-		message = "90/90";
+		message = "90/90e";
 		serialPuts(fd, message.c_str());
 	}
 }
