@@ -122,10 +122,8 @@ double determineTrajectoryAngle(Vec3d MarkerPos, float Grav, float Speed) // cal
 	angle1 = angle1 / 3.14159265359 * 180;
 	angle2 = angle2 / 3.14159265359 * 180;
 
-	if (!isnan(angle1)) {
-		return angle1;
-	}
-	else if (!isnan(angle2)) {
+
+	if (!isnan(angle2)) {
 		return angle2;
 	}
 	else {
