@@ -26,7 +26,7 @@ bool pi = 1;
 #include <sstream>
 #include <iostream>
 #include <fstream>
-
+#include <vector>
 using namespace std;
 using namespace cv;
 
@@ -135,7 +135,7 @@ double determineTrajectoryAngle(Vec3d MarkerPos, float Grav, float Speed) // cal
 
 }
 
-int startWebcamMonitoring(const Mat& cameraMatrix, const Mat& distanceCoefficient, float arucoSquareDimensions, Vec3d& cupPos)
+int startWebcamMonitoring(const Mat& cameraMatrix, const Mat& distanceCoefficient, float arucoSquareDimensions, Vec3d& cupPos)      
 {
 	Mat frame;
 	int fd;
@@ -200,18 +200,24 @@ int startWebcamMonitoring(const Mat& cameraMatrix, const Mat& distanceCoefficien
 		message = "90/90e";
 		imshow("Webcam", frame);
 		//	cout << serialDataAvail(fd) << endl;
-		serialFlush(fd);
-#if defined(__linux__) || defined(__unix__)
+		
+
 		serialPrintf(fd, "%f/%fe", determineTrajectoryAngle(cupPos, gravitationalConstant, speed), determineZRot(cupPos));
 		//serialPuts(fd, message.c_str());
 
 		cout << printf("%f/%f\n", determineTrajectoryAngle(cupPos, gravitationalConstant, speed), determineZRot(cupPos)) << endl;
-#endif
+
+		//Recieving handshake from Arduino:
+		vector<char> arduinoPacket;
+		while (serialDataAvail(fd) > 0) {
+			arduinoPacket.push_back(serialGetchar(fd));
+		}
+		string packet(arduinoPacket.begin(), arduinoPacket.end());
+		cout << packet << endl;
 		if (waitKey(30) >= 0) {
-#if defined(__linux__) || defined(__unix__)
+
 			serialClose(fd);
 
-#endif
 			break;
 		}
 
