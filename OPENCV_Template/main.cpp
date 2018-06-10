@@ -187,8 +187,8 @@ int startWebcamMonitoring(const Mat& cameraMatrix, const Mat& distanceCoefficien
 		}
 		
 		aruco::drawDetectedMarkers(frame, markerCorners, markerIds, 0.1f);
-		//cupPos[0] -= 0.25;
-		//cupPos[1] -= 0.25;
+		cupPos[0] -= 0.35;
+		cupPos[1] -= 0.21;
 		cout << cupPos[0] << "/" << cupPos[1] << "/" << cupPos[2] << endl;
 		
 		//cout << "Cup is at " << cupPos << " relative to the camera." << endl;
