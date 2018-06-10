@@ -402,6 +402,7 @@ int main(int argv, char** argc)
 	
 	if (input == "c") {
 		cameraCalibrationProcess(cameraMatrix, distanceCoefficients);
+		return 1;
 	}
 	if (input == "p") {
 		createArucoMarkers();
