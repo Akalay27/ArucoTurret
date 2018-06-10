@@ -198,7 +198,7 @@ int startWebcamMonitoring(const Mat& cameraMatrix, const Mat& distanceCoefficien
 		serialFlush(fd);
 		#if defined(__linux__) || defined(__unix__)
 			//serialPrintf(fd, "%f/%f\n", determineTrajectoryAngle(cupPos, gravitationalConstant, speed), determineZRot(cupPos));
-			serialPuts(fd, message.c_str());
+			          serialPuts(fd, message.c_str());
 			
 			cout << printf("%f/%f\n", determineTrajectoryAngle(cupPos, gravitationalConstant, speed), determineZRot(cupPos)) << endl;
 		#endif
@@ -358,7 +358,7 @@ void cameraCalibrationProcess(Mat& cameraMatrix, Mat& distanceCoefficients) {
 		case 13:
 			//start calibration
 			if (savedImages.size() > 15) {
-
+				destroyAllWindows();
 				cameraCalibration(savedImages, chessboardDimensions, calibrationSquareDimension, cameraMatrix, distanceCoefficients);
 				saveCameraCalibration("Okaythen", cameraMatrix, distanceCoefficients);
 			}
