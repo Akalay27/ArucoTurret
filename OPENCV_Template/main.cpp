@@ -146,7 +146,7 @@ int startWebcamMonitoring(const Mat& cameraMatrix, const Mat& distanceCoefficien
 	
 	cout << "initializing Arduino..." << endl;
 	#if defined(__linux__) || defined(__unix__)
-		fd = serialOpen(serialPort.c_str(), 57600);
+		fd = serialOpen(serialPort.c_str(), 9600);
 
 	#endif
 		delay(5000);
@@ -198,7 +198,7 @@ int startWebcamMonitoring(const Mat& cameraMatrix, const Mat& distanceCoefficien
 		#if defined(__linux__) || defined(__unix__)
 			//serialPrintf(fd, "%f/%f\n", determineTrajectoryAngle(cupPos, gravitationalConstant, speed), determineZRot(cupPos));
 			serialPuts(fd, message.c_str());
-			delay(10);
+			
 			cout << printf("%f/%f\n", determineTrajectoryAngle(cupPos, gravitationalConstant, speed), determineZRot(cupPos)) << endl;
 		#endif
 		if (waitKey(30) >= 0) {
@@ -378,7 +378,7 @@ void testSerial() {
 	string port;
 	cin >> port;
 	
-	int fd = serialOpen(port.c_str(), 57600);
+	int fd = serialOpen(port.c_str(), 9600);
 	while (true) {
 		string message;
 		
