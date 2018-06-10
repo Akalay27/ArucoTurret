@@ -108,7 +108,7 @@ void cameraCalibration(vector<Mat> calibrationImages, Size boardSize, float squa
 
 double determineZRot(Vec3d MarkerPos) {  // Find nema17 rotation pretty much
 
-	return atan2(MarkerPos[2], MarkerPos[0]); // Marker Z and X
+	return atan2(MarkerPos[0], MarkerPos[2])/3.14156265359*180; // Marker Z and X
 
 }
 
@@ -189,7 +189,9 @@ int startWebcamMonitoring(const Mat& cameraMatrix, const Mat& distanceCoefficien
 		}
 		cout << cupPos[0] << "/" << cupPos[1] << "/" << cupPos[2] << endl;
 		aruco::drawDetectedMarkers(frame, markerCorners, markerIds, 0.1f);
-		cupPos += cameraOffset;
+		cupPos[0] -= 0.4;
+		cupPos[1] -= 0.80;
+		
 		//cout << "Cup is at " << cupPos << " relative to the camera." << endl;
 		//cout << "Rotation of motors: " << determineZRot(cupPos) << " in y and " << determineTrajectoryAngle(cupPos,gravitationalConstant,speed) << " in x." << endl;
 		string message;
@@ -201,7 +203,7 @@ int startWebcamMonitoring(const Mat& cameraMatrix, const Mat& distanceCoefficien
 		//serialPrintf(fd, "%f/%f\n", determineTrajectoryAngle(cupPos, gravitationalConstant, speed), determineZRot(cupPos));
 		serialPuts(fd, message.c_str());
 
-		//cout << printf("%f/%f\n", determineTrajectoryAngle(cupPos, gravitationalConstant, speed), determineZRot(cupPos)) << endl;
+		cout << printf("%f/%f\n", determineTrajectoryAngle(cupPos, gravitationalConstant, speed), determineZRot(cupPos)) << endl;
 #endif
 		if (waitKey(30) >= 0) {
 #if defined(__linux__) || defined(__unix__)
