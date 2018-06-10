@@ -108,7 +108,7 @@ void cameraCalibration(vector<Mat> calibrationImages, Size boardSize, float squa
 
 double determineZRot(Vec3d MarkerPos) {  // Find nema17 rotation pretty much
 
-	return atan2(MarkerPos[0], MarkerPos[2])/3.14156265359*180; // Marker Z and X
+	return atan2(MarkerPos[0], MarkerPos[2])/3.14156265359*180*-1; // Marker Z and X
 
 }
 
