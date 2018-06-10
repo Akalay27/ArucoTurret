@@ -200,7 +200,12 @@ int startWebcamMonitoring(const Mat& cameraMatrix, const Mat& distanceCoefficien
 		message = "90/90e";
 		imshow("Webcam", frame);
 		//	cout << serialDataAvail(fd) << endl;
-		
+		vector<char> arduinoPacket;
+		while (serialDataAvail(fd) > 0) {
+			arduinoPacket.push_back(serialGetchar(fd));
+		}
+		string packet(arduinoPacket.begin(), arduinoPacket.end());
+		cout << packet << endl;
 
 		serialPrintf(fd, "%f/%fe", determineTrajectoryAngle(cupPos, gravitationalConstant, speed), determineZRot(cupPos));
 		//serialPuts(fd, message.c_str());
@@ -208,12 +213,7 @@ int startWebcamMonitoring(const Mat& cameraMatrix, const Mat& distanceCoefficien
 		cout << printf("%f/%f\n", determineTrajectoryAngle(cupPos, gravitationalConstant, speed), determineZRot(cupPos)) << endl;
 
 		//Recieving handshake from Arduino:
-		vector<char> arduinoPacket;
-		while (serialDataAvail(fd) > 0) {
-			arduinoPacket.push_back(serialGetchar(fd));
-		}
-		string packet(arduinoPacket.begin(), arduinoPacket.end());
-		cout << packet << endl;
+		
 		if (waitKey(30) >= 0) {
 
 			serialClose(fd);
