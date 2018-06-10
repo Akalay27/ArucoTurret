@@ -149,7 +149,7 @@ int startWebcamMonitoring(const Mat& cameraMatrix, const Mat& distanceCoefficien
 		fd = serialOpen(serialPort.c_str(), 57600);
 
 	#endif
-		delay(5000);
+		
 	vector<int> markerIds;
 	vector<vector<Point2f>> markerCorners, rejectedCanidates;
 	aruco::DetectorParameters parameters;
@@ -173,7 +173,7 @@ int startWebcamMonitoring(const Mat& cameraMatrix, const Mat& distanceCoefficien
 			cout << "failed to initiate camera" << endl;
 			break;
 		}
-		rotate(frame, frame, ROTATE_90_CLOCKWISE);
+		rotate(frame, frame, ROTATE_90_COUNTERCLOCKWISE);
 		
 		aruco::detectMarkers(frame, markerDictionary, markerCorners, markerIds);
 		aruco::estimatePoseSingleMarkers(markerCorners, arucoSquareDimension, cameraMatrix, distanceCoefficient, rotationVectors, translationVectors);
