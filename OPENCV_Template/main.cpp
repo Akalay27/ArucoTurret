@@ -4,23 +4,23 @@
 #include <errno.h>
 
 #if defined(_WIN64)
-	#include "opencv2\core.hpp"
-	#include "opencv2\imgcodecs.hpp"
-	#include "opencv2\imgproc.hpp"
-	#include "opencv2\highgui.hpp"
-	#include "opencv2\aruco.hpp"
-	#include "opencv2\calib3d.hpp"
-	bool pi = 0;
+#include "opencv2\core.hpp"
+#include "opencv2\imgcodecs.hpp"
+#include "opencv2\imgproc.hpp"
+#include "opencv2\highgui.hpp"
+#include "opencv2\aruco.hpp"
+#include "opencv2\calib3d.hpp"
+bool pi = 0;
 #elif defined(__linux__) || defined(__unix__)
-	#include "opencv2/core.hpp"
-	#include "opencv2/imgcodecs.hpp"
-	#include "opencv2/imgproc.hpp"
-	#include "opencv2/highgui.hpp"
-	#include "opencv2/aruco.hpp"
-	#include "opencv2/calib3d.hpp"
-	#include <wiringPi.h>
-	#include <wiringSerial.h>
-	bool pi = 1;
+#include "opencv2/core.hpp"
+#include "opencv2/imgcodecs.hpp"
+#include "opencv2/imgproc.hpp"
+#include "opencv2/highgui.hpp"
+#include "opencv2/aruco.hpp"
+#include "opencv2/calib3d.hpp"
+#include <wiringPi.h>
+#include <wiringSerial.h>
+bool pi = 1;
 #endif
 
 #include <sstream>
@@ -60,7 +60,7 @@ void createArucoMarkers() {
 void createKnownBoardPosition(Size boardSize, float squareEdgeLength, vector<Point3f>& corners) {
 	for (int i = 0; i < boardSize.height; i++)
 	{
-		for (int j = 0; j < boardSize.width; j++) 
+		for (int j = 0; j < boardSize.width; j++)
 		{
 			corners.push_back(Point3f(j*squareEdgeLength, i * squareEdgeLength, 0.0f));
 
@@ -119,7 +119,7 @@ double determineTrajectoryAngle(Vec3d MarkerPos, float Grav, float Speed) // cal
 	double angle1 = atan((pow(Speed, 2) + sqrt(pow(Speed, 4) - Grav * (Grav*pow(x, 2) + 2 * pow(Speed, 2)*y))) / Grav * x); // From https://blog.forrestthewoods.com/solving-ballistic-trajectories-b0165523348c
 
 	double angle2 = atan((pow(Speed, 2) - sqrt(pow(Speed, 4) - Grav * (Grav*pow(x, 2) + 2 * pow(Speed, 2)*y))) / Grav * x);
-	angle1 =angle1/ 3.14159265359 *180;
+	angle1 = angle1 / 3.14159265359 * 180;
 	angle2 = angle2 / 3.14159265359 * 180;
 
 	if (!isnan(angle1)) {
@@ -131,8 +131,8 @@ double determineTrajectoryAngle(Vec3d MarkerPos, float Grav, float Speed) // cal
 	else {
 		return 0;
 	}
-	
-	
+
+
 
 
 }
@@ -143,13 +143,13 @@ int startWebcamMonitoring(const Mat& cameraMatrix, const Mat& distanceCoefficien
 	int fd;
 	string serialPort;
 	cin >> serialPort;
-	
-	cout << "initializing Arduino..." << endl;
-	#if defined(__linux__) || defined(__unix__)
-		fd = serialOpen(serialPort.c_str(), 9600);
 
-	#endif
-		delay(5000);
+	cout << "initializing Arduino..." << endl;
+#if defined(__linux__) || defined(__unix__)
+	fd = serialOpen(serialPort.c_str(), 9600);
+
+#endif
+	delay(5000);
 	vector<int> markerIds;
 	vector<vector<Point2f>> markerCorners, rejectedCanidates;
 	aruco::DetectorParameters parameters;
@@ -163,7 +163,7 @@ int startWebcamMonitoring(const Mat& cameraMatrix, const Mat& distanceCoefficien
 		return -1;
 	}
 
-	
+
 	namedWindow("Webcam", WINDOW_AUTOSIZE);
 
 	vector<Vec3d> rotationVectors, translationVectors;
@@ -174,44 +174,45 @@ int startWebcamMonitoring(const Mat& cameraMatrix, const Mat& distanceCoefficien
 			break;
 		}
 		rotate(frame, frame, ROTATE_90_COUNTERCLOCKWISE);
-		
+
 		aruco::detectMarkers(frame, markerDictionary, markerCorners, markerIds);
 		aruco::estimatePoseSingleMarkers(markerCorners, arucoSquareDimension, cameraMatrix, distanceCoefficient, rotationVectors, translationVectors);
 		// single object with one aruco marker
 		for (int m = 0; m < markerIds.size(); m++) {
 			aruco::drawAxis(frame, cameraMatrix, distanceCoefficient, rotationVectors[m], translationVectors[m], 0.1f);
-			
+
 			//cout << translationVectors[m] << endl;
 			if (markerIds[m] == cupMarkerId) {
 				//cout << "found the cup!";
 				cupPos = translationVectors[m];
 			}
 		}
-		aruco::drawDetectedMarkers(frame, markerCorners,markerIds, 0.1f);
+		cout << cupPos[0] << "/" << cupPos[1] << "/" << cupPos[2] << endl;
+		aruco::drawDetectedMarkers(frame, markerCorners, markerIds, 0.1f);
 		cupPos += cameraOffset;
 		//cout << "Cup is at " << cupPos << " relative to the camera." << endl;
 		//cout << "Rotation of motors: " << determineZRot(cupPos) << " in y and " << determineTrajectoryAngle(cupPos,gravitationalConstant,speed) << " in x." << endl;
 		string message;
 		message = "90/90e";
 		imshow("Webcam", frame);
-	//	cout << serialDataAvail(fd) << endl;
+		//	cout << serialDataAvail(fd) << endl;
 		serialFlush(fd);
-		#if defined(__linux__) || defined(__unix__)
-			//serialPrintf(fd, "%f/%f\n", determineTrajectoryAngle(cupPos, gravitationalConstant, speed), determineZRot(cupPos));
-			          serialPuts(fd, message.c_str());
-			
-			cout << printf("%f/%f\n", determineTrajectoryAngle(cupPos, gravitationalConstant, speed), determineZRot(cupPos)) << endl;
-		#endif
-		if (waitKey(30) >= 0) {
-			#if defined(__linux__) || defined(__unix__)
-				serialClose(fd);
+#if defined(__linux__) || defined(__unix__)
+		//serialPrintf(fd, "%f/%f\n", determineTrajectoryAngle(cupPos, gravitationalConstant, speed), determineZRot(cupPos));
+		serialPuts(fd, message.c_str());
 
-			#endif
+		//cout << printf("%f/%f\n", determineTrajectoryAngle(cupPos, gravitationalConstant, speed), determineZRot(cupPos)) << endl;
+#endif
+		if (waitKey(30) >= 0) {
+#if defined(__linux__) || defined(__unix__)
+			serialClose(fd);
+
+#endif
 			break;
 		}
 
-		
-		
+
+
 
 
 	}
@@ -231,7 +232,7 @@ bool saveCameraCalibration(string name, Mat cameraMatrix, Mat distanceCoefficien
 
 		for (int r = 0; r < rows; r++)
 		{
-			for (int c = 0; c < columns; c++) 
+			for (int c = 0; c < columns; c++)
 			{
 				double value = cameraMatrix.at<double>(r, c);
 				outStream << value << endl;
@@ -379,13 +380,13 @@ void testSerial() {
 
 	string port;
 	cin >> port;
-	
+
 	int fd = serialOpen(port.c_str(), 9600);
 	while (true) {
 		string message;
-		
+
 		cin >> message;
-		
+
 		serialPuts(fd, message.c_str());
 	}
 }
@@ -400,7 +401,7 @@ int main(int argv, char** argc)
 
 	string input;
 	cin >> input;
-	
+
 	if (input == "c") {
 		cameraCalibrationProcess(cameraMatrix, distanceCoefficients);
 		return 1;
@@ -415,12 +416,12 @@ int main(int argv, char** argc)
 		wiringPiSetup();
 		loadCameraCalibration("Okaythen", cameraMatrix, distanceCoefficients);
 		startWebcamMonitoring(cameraMatrix, distanceCoefficients, arucoSquareDimension, cupPos);
-	}  
-	
-	
-	
-	
-	
+	}
+
+
+
+
+
 
 	return 0;
 }
