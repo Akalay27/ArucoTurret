@@ -194,7 +194,8 @@ int startWebcamMonitoring(const Mat& cameraMatrix, const Mat& distanceCoefficien
 		string message;
 		message = "90/90e";
 		imshow("Webcam", frame);
-		cout << serialDataAvail(fd) << endl;
+	//	cout << serialDataAvail(fd) << endl;
+		serialFlush(fd);
 		#if defined(__linux__) || defined(__unix__)
 			//serialPrintf(fd, "%f/%f\n", determineTrajectoryAngle(cupPos, gravitationalConstant, speed), determineZRot(cupPos));
 			serialPuts(fd, message.c_str());
