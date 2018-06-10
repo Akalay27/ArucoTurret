@@ -184,19 +184,14 @@ int startWebcamMonitoring(const Mat& cameraMatrix, const Mat& distanceCoefficien
 			if (markerIds[m] == cupMarkerId) {
 				//cout << "found the cup!";
 				cupPos = translationVectors[m];
-				targetVisible = true;
-			}
-			else {
-				targetVisible = false;
+				cupPos[0] -= 0.35;
+				cupPos[1] -= 0.21;
+				cupPos[1] *= -1;
 			}
 		}
 		
 		aruco::drawDetectedMarkers(frame, markerCorners, markerIds, 0.1f);
-		if (targetVisible) {
-			cupPos[0] -= 0.35;
-			cupPos[1] -= 0.21;
-			cupPos[1] *= -1;
-		}
+		
 		cout << cupPos[0] << "/" << cupPos[1] << "/" << cupPos[2] << endl;
 		
 		//cout << "Cup is at " << cupPos << " relative to the camera." << endl;
