@@ -194,7 +194,7 @@ int startWebcamMonitoring(const Mat& cameraMatrix, const Mat& distanceCoefficien
 		string message;
 		message = "90/90e";
 		imshow("Webcam", frame);
-
+		cout << "how many times oh how many times" << endl;
 		#if defined(__linux__) || defined(__unix__)
 			//serialPrintf(fd, "%f/%f\n", determineTrajectoryAngle(cupPos, gravitationalConstant, speed), determineZRot(cupPos));
 			serialPuts(fd, message.c_str());
