@@ -325,6 +325,7 @@ void cameraCalibrationProcess(Mat& cameraMatrix, Mat& distanceCoefficients) {
 	{
 		if (!vid.read(frame))
 			break;
+		rotate(frame, frame, ROTATE_90_COUNTERCLOCKWISE);
 
 		vector<Vec2f> foundPoints;
 		bool found = false;
