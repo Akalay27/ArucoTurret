@@ -200,8 +200,8 @@ int startWebcamMonitoring(const Mat& cameraMatrix, const Mat& distanceCoefficien
 		//	cout << serialDataAvail(fd) << endl;
 		serialFlush(fd);
 #if defined(__linux__) || defined(__unix__)
-		//serialPrintf(fd, "%f/%f\n", determineTrajectoryAngle(cupPos, gravitationalConstant, speed), determineZRot(cupPos));
-		serialPuts(fd, message.c_str());
+		serialPrintf(fd, "%f/%fe", determineTrajectoryAngle(cupPos, gravitationalConstant, speed), determineZRot(cupPos));
+		//serialPuts(fd, message.c_str());
 
 		cout << printf("%f/%f\n", determineTrajectoryAngle(cupPos, gravitationalConstant, speed), determineZRot(cupPos)) << endl;
 #endif
