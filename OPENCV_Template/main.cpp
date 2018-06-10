@@ -163,10 +163,7 @@ int startWebcamMonitoring(const Mat& cameraMatrix, const Mat& distanceCoefficien
 		return -1;
 	}
 
-	Mat dst;
-	transpose(frame, dst);
-	flip(dst, dst, 1);
-	frame = dst;
+	
 	namedWindow("Webcam", WINDOW_AUTOSIZE);
 
 	vector<Vec3d> rotationVectors, translationVectors;
@@ -176,7 +173,8 @@ int startWebcamMonitoring(const Mat& cameraMatrix, const Mat& distanceCoefficien
 			cout << "failed to initiate camera" << endl;
 			break;
 		}
-		frame = rotateImage(frame, 90);
+		rotate(frame, frame, ROTATE_90_CLOCKWISE);
+		
 		aruco::detectMarkers(frame, markerDictionary, markerCorners, markerIds);
 		aruco::estimatePoseSingleMarkers(markerCorners, arucoSquareDimension, cameraMatrix, distanceCoefficient, rotationVectors, translationVectors);
 		// single object with one aruco marker
