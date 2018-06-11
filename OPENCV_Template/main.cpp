@@ -40,6 +40,7 @@ const float speed = 5;  // need to determine
 
 const Vec3d cameraOffset = { 0,0,0 };
 
+const float zRotAdjust = 0.5;
 void createArucoMarkers() {
 
 	Mat outputMarker;
@@ -177,7 +178,7 @@ int startWebcamMonitoring(const Mat& cameraMatrix, const Mat& distanceCoefficien
 
 	vector<Vec3d> rotationVectors, translationVectors;
 
-
+	float prevZRot = 0;
 	while (true) {
 		if (!vid.read(frame)) {
 			cout << "failed to initiate camera" << endl;
@@ -195,9 +196,9 @@ int startWebcamMonitoring(const Mat& cameraMatrix, const Mat& distanceCoefficien
 			if (markerIds[m] == cupMarkerId) {
 				//cout << "found the cup!";
 				cupPos = translationVectors[m];
-				cupPos[0] -= 0.35;
-				cupPos[1] -= 0.21;
-				cupPos[1] *= -1;
+				//cupPos[0] -= 0.35;
+				//cupPos[1] -= 0.21;
+				//cupPos[1] *= -1;
 			}
 		}
 		
