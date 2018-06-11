@@ -354,7 +354,7 @@ void cameraCalibrationProcess(Mat& cameraMatrix, Mat& distanceCoefficients) {
 		vector<Vec2f> foundPoints;
 		bool found = false;
 
-		found = findChessboardCorners(frame, chessboardDimensions, foundPoints, CALIB_CB_ADAPTIVE_THRESH | CALIB_CB_NORMALIZE_IMAGE);
+		found = findChessboardCorners(frame, chessboardDimensions, foundPoints, CALIB_CB_ADAPTIVE_THRESH | CALIB_CB_NORMALIZE_IMAGE | CALIB_CB_FAST_CHECK);
 		frame.copyTo(drawToFrame);
 		drawChessboardCorners(drawToFrame, chessboardDimensions, foundPoints, found);
 		if (found) {
