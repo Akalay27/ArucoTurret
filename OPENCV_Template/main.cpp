@@ -183,7 +183,7 @@ int startWebcamMonitoring(const Mat& cameraMatrix, const Mat& distanceCoefficien
 			cout << "failed to initiate camera" << endl;
 			break;
 		}
-		rotate(frame, frame, ROTATE_90_COUNTERCLOCKWISE);
+		
 
 		aruco::detectMarkers(frame, markerDictionary, markerCorners, markerIds);
 		aruco::estimatePoseSingleMarkers(markerCorners, arucoSquareDimension, cameraMatrix, distanceCoefficient, rotationVectors, translationVectors);
@@ -348,7 +348,7 @@ void cameraCalibrationProcess(Mat& cameraMatrix, Mat& distanceCoefficients) {
 	{
 		if (!vid.read(frame))
 			break;
-		rotate(frame, frame, ROTATE_90_COUNTERCLOCKWISE);
+		
 
 		vector<Vec2f> foundPoints;
 		bool found = false;
@@ -383,6 +383,7 @@ void cameraCalibrationProcess(Mat& cameraMatrix, Mat& distanceCoefficients) {
 				destroyAllWindows();
 				cameraCalibration(savedImages, chessboardDimensions, calibrationSquareDimension, cameraMatrix, distanceCoefficients);
 				saveCameraCalibration("Okaythen", cameraMatrix, distanceCoefficients);
+				return;
 			}
 			break;
 
