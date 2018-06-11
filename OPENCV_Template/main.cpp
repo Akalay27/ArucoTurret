@@ -154,6 +154,7 @@ int startWebcamMonitoring(const Mat& cameraMatrix, const Mat& distanceCoefficien
 			arduinoPacket.push_back(serialGetchar(fd));
 		}
 		string packet(arduinoPacket.begin(), arduinoPacket.end());
+		cout << packet << endl;
 		if (packet == "begin") {
 			begun = true;
 		}
