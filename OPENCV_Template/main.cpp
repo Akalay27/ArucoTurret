@@ -196,8 +196,8 @@ int startWebcamMonitoring(const Mat& cameraMatrix, const Mat& distanceCoefficien
 			if (markerIds[m] == cupMarkerId) {
 				//cout << "found the cup!";
 				cupPos = translationVectors[m];
-				//cupPos[0] -= 0.35;
-				//cupPos[1] -= 0.21;
+				//cupPos[0] -= 0.36.5;
+				//cupPos[1] -= 0.19;
 				//cupPos[1] *= -1;
 			}
 		}
