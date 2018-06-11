@@ -147,7 +147,17 @@ int startWebcamMonitoring(const Mat& cameraMatrix, const Mat& distanceCoefficien
 	fd = serialOpen(serialPort.c_str(), 9600);
 
 #endif
-	delay(5000);
+	bool begun = false;
+	while (begun == false) {
+		vector<char> arduinoPacket;
+		while (serialDataAvail(fd) > 0) {
+			arduinoPacket.push_back(serialGetchar(fd));
+		}
+		string packet(arduinoPacket.begin(), arduinoPacket.end());
+		if (packet == "begin") {
+			begun = true;
+		}
+	}
 	vector<int> markerIds;
 	vector<vector<Point2f>> markerCorners, rejectedCanidates;
 	aruco::DetectorParameters parameters;
@@ -166,7 +176,7 @@ int startWebcamMonitoring(const Mat& cameraMatrix, const Mat& distanceCoefficien
 
 	vector<Vec3d> rotationVectors, translationVectors;
 
-	bool targetVisible = false;
+
 	while (true) {
 		if (!vid.read(frame)) {
 			cout << "failed to initiate camera" << endl;
