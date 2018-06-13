@@ -151,14 +151,10 @@ int startWebcamMonitoring(const Mat& cameraMatrix, const Mat& distanceCoefficien
 	bool begun = false;
 	while (begun == false) {
 		vector<char> arduinoPacket;
-		while (serialDataAvail(fd) > 0) {
-			arduinoPacket.push_back(serialGetchar(fd));
-		}
-		string packet(arduinoPacket.begin(), arduinoPacket.end());
-		cout << packet << endl;
-		if (packet == "begin") {
+		if (serialDataAvail(fd) > 0) {
 			begun = true;
 		}
+		
 	}
 	vector<int> markerIds;
 	vector<vector<Point2f>> markerCorners, rejectedCanidates;
