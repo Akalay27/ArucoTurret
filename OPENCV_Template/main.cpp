@@ -434,7 +434,7 @@ void testTurret() {
 
 	serialPrintf(fd, "%f/%fe", xAngle,yAngle);
 	string motorPos;
-	while (motorPos != "0.00/0.00") {
+	while (motorPos != "0.00/0.00\n") {
 		vector<char> arduinoPacket;
 		while (serialDataAvail(fd) > 0) {
 			arduinoPacket.push_back(serialGetchar(fd));
@@ -443,7 +443,7 @@ void testTurret() {
 		cout << packet << endl;
 
 		serialPuts(fd, "de");
-		delay(1);
+		delay(500);
 	}
 	cout << "Firing..." << endl;
 }
