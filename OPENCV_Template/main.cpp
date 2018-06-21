@@ -414,7 +414,7 @@ void testTurret() {
 	cin >> port;
 
 	int fd = serialOpen(port.c_str(), 9600);
-	while (true) {
+	
 		cout << "Turret Test" << endl << "type X, Y, and Z and magnitude. Press enter for each." << endl;
 		cout << "X (left-right): ";
 		float xPos;
@@ -454,7 +454,7 @@ void testTurret() {
 		cin >> wait;
 		serialPuts(fd, "shoote");
 		cout << "Firing!" << endl;
-	}
+	
 }
 
 int main(int argv, char** argc)
