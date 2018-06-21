@@ -120,7 +120,7 @@ double determineTrajectoryAngle(Vec3d MarkerPos, float Grav, float Speed) // cal
 	cout << "height " << y << " and distance " << x << " with speed of " << Speed << endl;
 	double angle1 = atan((pow(Speed, 2) + sqrt(pow(Speed, 4) - Grav * (Grav*pow(x, 2) + 2 * pow(Speed, 2)*y))) / Grav * x); // From https://blog.forrestthewoods.com/solving-ballistic-trajectories-b0165523348c
 
-	double angle2 = atan((pow(Speed, 2) - sqrt(pow(Speed, 4) - Grav * (Grav*pow(x, 2) + 2 * pow(Speed, 2)*y))) / Grav * x);
+	double angle2 = atan((pow(Speed, 2) - sqrt(pow(Speed, 4) -(Grav * (Grav*pow(x, 2) + (2 * pow(Speed, 2)*y))))) / Grav * x);
 	angle1 = angle1 / 3.14159265359 * 180;
 	angle2 = angle2 / 3.14159265359 * 180;
 
