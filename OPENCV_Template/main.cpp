@@ -447,11 +447,9 @@ void testTurret() {
 			serialPuts(fd, "de");
 			delay(500);
 		}
-		cout << "press enter to arm:" << endl;
-		float wait;
-		cin >> wait;
+		
 		serialPuts(fd, "arme");
-		delay(3000);
+		float wait;
 		cout << "press enter to fire:" << endl;
 		cin >> wait;
 		serialPuts(fd, "shoote");
