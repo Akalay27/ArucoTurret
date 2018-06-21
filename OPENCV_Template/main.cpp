@@ -414,46 +414,49 @@ void testTurret() {
 	cin >> port;
 
 	int fd = serialOpen(port.c_str(), 9600);
-	cout << "Turret Test" << endl << "type X, Y, and Z and magnitude. Press enter for each." << endl;
-	cout << "X (left-right): ";
-	float xPos;
-	cin >> xPos;
-	cout << "Y (up-down): ";
-	float yPos;
-	cin >> yPos;
-	cout << "Z (forward-back): ";
-	float zPos;
-	cin >> zPos;
-	cout << "Magnitude: ";
-	float magnitude;
-	cin >> magnitude;
-	float yAngle = determineZRot(Vec3d(xPos, yPos, zPos));
-	float xAngle = determineTrajectoryAngle(Vec3d(xPos, yPos, zPos), gravitationalConstant, magnitude);
-	cout << "calculated " << yAngle << " degrees X and " << xAngle << " degrees Y" << endl;
-	cout << "adjusting motors";
+	while (true) {
+		cout << "Turret Test" << endl << "type X, Y, and Z and magnitude. Press enter for each." << endl;
+		cout << "X (left-right): ";
+		float xPos;
+		cin >> xPos;
+		cout << "Y (up-down): ";
+		float yPos;
+		cin >> yPos;
+		cout << "Z (forward-back): ";
+		float zPos;
+		cin >> zPos;
+		cout << "Magnitude: ";
+		float magnitude;
+		cin >> magnitude;
+		float yAngle = determineZRot(Vec3d(xPos, yPos, zPos));
+		float xAngle = determineTrajectoryAngle(Vec3d(xPos, yPos, zPos), gravitationalConstant, magnitude);
+		cout << "calculated " << yAngle << " degrees X and " << xAngle << " degrees Y" << endl;
+		cout << "adjusting motors";
 
-	serialPrintf(fd, "%f/%fe", xAngle,yAngle);
-	string motorPos;
-	while (motorPos.find("0.00/0.00") != string::npos) {
-		vector<char> arduinoPacket;
-		while (serialDataAvail(fd) > 0) {
-			arduinoPacket.push_back(serialGetchar(fd));
+		serialPrintf(fd, "%f/%fe", xAngle, yAngle);
+		string motorPos;
+		while (motorPos.find("0.00/0.00") != string::npos) {
+			vector<char> arduinoPacket;
+			while (serialDataAvail(fd) > 0) {
+				arduinoPacket.push_back(serialGetchar(fd));
+			}
+			string packet(arduinoPacket.begin(), arduinoPacket.end());
+			cout << packet << endl;
+
+			motorPos = packet;
+			serialPuts(fd, "de");
+			delay(500);
 		}
-		string packet(arduinoPacket.begin(), arduinoPacket.end());
-		cout << packet << endl;
-
-		motorPos = packet;
-		serialPuts(fd, "de");
-		delay(500);
+		cout << "press enter to arm:" << endl;
+		float wait;
+		cin >> wait;
+		serialPuts(fd, "arme");
+		delay(3000);
+		cout << "press enter to fire:" << endl;
+		cin >> wait;
+		serialPuts(fd, "shoote");
+		cout << "Firing!" << endl;
 	}
-	cout << "press enter to arm:" << endl;
-	float wait;
-	cin >> wait;
-	serialPuts(fd, "arme");
-	cout << "press enter to fire:" << endl;
-	cin >> wait;
-	serialPuts(fd, "shoote");
-	cout << "Firing!" << endl;
 }
 
 int main(int argv, char** argc)
