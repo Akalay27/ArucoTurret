@@ -430,6 +430,7 @@ void testTurret() {
 		cin >> magnitude;
 		float yAngle = determineZRot(Vec3d(xPos, yPos, zPos));
 		float xAngle = determineTrajectoryAngle(Vec3d(xPos, yPos, zPos), gravitationalConstant, magnitude);
+		cout << "height " << yPos << " and distance " << sqrt(pow(xPos, 2) + pow(zPos, 2)) << endl;
 		cout << "calculated " << yAngle << " degrees X and " << xAngle << " degrees Y" << endl;
 		cout << "adjusting motors";
 
