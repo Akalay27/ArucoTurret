@@ -435,7 +435,7 @@ void testTurret() {
 
 		serialPrintf(fd, "%f/%fe", xAngle, yAngle);
 		string motorPos;
-		while (motorPos.find("0.00/0.00") != string::npos) {
+		while (motorPos.find("0.00/0.00") == string::npos) {
 			vector<char> arduinoPacket;
 			while (serialDataAvail(fd) > 0) {
 				arduinoPacket.push_back(serialGetchar(fd));
