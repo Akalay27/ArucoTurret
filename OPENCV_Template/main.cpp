@@ -442,6 +442,7 @@ void testTurret() {
 		string packet(arduinoPacket.begin(), arduinoPacket.end());
 		cout << packet << endl;
 
+		motorPos = packet;
 		serialPuts(fd, "de");
 		delay(500);
 	}
