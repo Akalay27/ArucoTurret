@@ -117,6 +117,7 @@ double determineTrajectoryAngle(Vec3d MarkerPos, float Grav, float Speed) // cal
 {
 	double x = sqrt(pow(MarkerPos[2], 2) + pow(MarkerPos[0], 2));
 	double y = MarkerPos[1];
+	cout << "height " << y << " and distance " << x << endl;
 	double angle1 = atan((pow(Speed, 2) + sqrt(pow(Speed, 4) - Grav * (Grav*pow(x, 2) + 2 * pow(Speed, 2)*y))) / Grav * x); // From https://blog.forrestthewoods.com/solving-ballistic-trajectories-b0165523348c
 
 	double angle2 = atan((pow(Speed, 2) - sqrt(pow(Speed, 4) - Grav * (Grav*pow(x, 2) + 2 * pow(Speed, 2)*y))) / Grav * x);
@@ -430,7 +431,7 @@ void testTurret() {
 		cin >> magnitude;
 		float yAngle = determineZRot(Vec3d(xPos, yPos, zPos));
 		float xAngle = determineTrajectoryAngle(Vec3d(xPos, yPos, zPos), gravitationalConstant, magnitude);
-		cout << "height " << yPos << " and distance " << sqrt(pow(xPos, 2) + pow(zPos, 2)) << endl;
+		
 		cout << "calculated " << yAngle << " degrees X and " << xAngle << " degrees Y" << endl;
 		cout << "adjusting motors";
 
